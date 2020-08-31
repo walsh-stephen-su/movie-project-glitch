@@ -1,13 +1,15 @@
+// server.js
+// where your node app starts
+
+
+// server.js
 const jsonServer = require('json-server')
 const server = jsonServer.create()
 const router = jsonServer.router('db.json')
-const staticMiddleware = require('express').static
+const middlewares = jsonServer.defaults()
 
-// serve content out of 'public' as is
-server.use(staticMiddleware('public'))
-
-server.use('/api', router)
-
-server.listen(3001, () => {
-    console.log('JSON Server is running')
-});
+server.use(middlewares)
+server.use(router)
+server.listen(3000, () => {
+  console.log('JSON Server is running')
+})

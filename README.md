@@ -14,10 +14,7 @@ after the `-d` flag inside of the npm `dev` script.
 ## Setup
 
 1. Remix this repository to your own glitch account.
-
-1. Run `npm install`
-
-1. Run `npm run db`
+1. Add your your remix URL to your project it should look like: `https://your-random-url.glitch.me/movies`
 
 ## Development
 
