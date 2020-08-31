@@ -16,12 +16,6 @@ after the `-d` flag inside of the npm `dev` script.
 1. Remix this repository to your own glitch account.
 1. Add your remixed URL to your project it should look like: `https://your-random-url.glitch.me/movies`
 
-## Development
-
-The `db.json` file contains your "database". You can edit this file directly to
-make changes to your data, and this file will be updated if you make api
-requests that modify the data.
-
 ## Specification
 
 Your application should:
