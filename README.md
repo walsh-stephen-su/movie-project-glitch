@@ -13,7 +13,7 @@ after the `-d` flag inside of the npm `dev` script.
 
 ## Setup
 
-1. [Remix](https://glitch.happyfox.com/kb/article/23-what%E2%80%99s-remixing/) this project to your own glitch account.
+1. <a href="https://glitch.happyfox.com/kb/article/23-what%E2%80%99s-remixing/" target="_blank">Remix</a> this project to your own glitch account.
 1. Add your remixed URL to your project it should look like: `https://your-random-url.glitch.me/movies`
 
 ## Specification
