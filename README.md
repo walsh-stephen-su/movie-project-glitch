@@ -14,7 +14,7 @@ after the `-d` flag inside of the npm `dev` script.
 ## Setup
 
 1. <a href="https://glitch.happyfox.com/kb/article/23-what%E2%80%99s-remixing/" target="_blank">Remix</a> this project to your own glitch account.
-1. Add your remixed URL to your project it should look like: `https://your-random-url.glitch.me/movies`
+1. Use your own remixed URL to your project to perform RESTful API requests, it should look like: `https://your-random-url.glitch.me/movies`
 
 ## Specification
 
@@ -53,12 +53,13 @@ Delete movies
 
 - Add a `disabled` attribute to buttons while their corresponding ajax request
   is still pending.
-- Show a loading animation instead of just text that says "loading..."
-- Use modals for the creating and editing movie forms
-- Add a `genre` property to every movie
-- Allow users to sort the movies by rating, title, or genre (if you have it)
+- Show a loading animation instead of just text that says "loading...".
+- Use modals for the creating and editing movie forms.
+- Add a `genre` property to every movie.
+- Allow users to sort the movies by rating, title, or genre (if you have it).
 - Allow users to search through the movies by rating, title, or genre (if you
-  have it)
+  have it).
+- Use a free movie API like <a href="http://www.omdbapi.com" target="_blank">OMDB</a> to include extra info or render movie posters.
 
 ## Helpful Hints
 
