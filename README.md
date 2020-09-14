@@ -14,7 +14,8 @@ after the `-d` flag inside of the npm `dev` script.
 ## Setup
 
 1. <a href="https://glitch.happyfox.com/kb/article/23-what%E2%80%99s-remixing/" target="_blank">Remix</a> this project to your own glitch account.
-1. Use your own remixed URL to your project to perform RESTful API requests, it should look like: `https://your-random-url.glitch.me/movies`
+1. Create a Github organization and create a repository to put your code in there.
+1. Use your own remixed URL to `fetch` results inside of your project to perform RESTful API requests, it should look like: `https://your-random-url.glitch.me/movies`
 
 ## Specification
 
