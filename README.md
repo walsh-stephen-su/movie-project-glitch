@@ -15,7 +15,8 @@ after the `-d` flag inside of the npm `dev` script.
 
 1. <a href="https://glitch.happyfox.com/kb/article/23-what%E2%80%99s-remixing/" target="_blank">Remix</a> this project to your own glitch account.
 1. Create a Github organization and create a repository to put your code in there.
-1. Use your own remixed URL to `fetch` results inside of your project to perform RESTful API requests, it should look like: `https://your-random-url.glitch.me/movies`
+1. Use your own remixed URL to `fetch` results inside of your project to perform RESTful API requests, it should look like: `https://your-random-url.glitch.me/movies`.
+1. Keep it in mind that the `json-server` doesn't update in real-time the `db.json` file, but it does respond with the latest information. Always rely on the endpoint that looks like this [https://codeup-json-server.glitch.me/movies](https://codeup-json-server.glitch.me/movies)
 
 ## Specification
 
