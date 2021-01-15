@@ -1,14 +1,6 @@
 {
   "movies": [
     {
-      "title": "up",
-      "rating": "5",
-      "poster": "https://m.media-amazon.com/images/M/MV5BMTk3NDE2NzI4NF5BMl5BanBnXkFtZTgwNzE1MzEyMTE@._V1_SX300.jpg",
-      "year": "2009",
-      "genre": "Animation, Adventure, Comedy, Family",
-      "director": "Pete Docter, Bob Peterson(co-director)",
-      "plot": "78-year-old Carl Fredricksen travels to Paradise Falls in his house equipped with balloons, inadvertently taking a young stowaway.",
-      "actors": "Edward Asner, Christopher Plummer, Jordan Nagai, Bob Peterson",
       "id": 1
     },
     {
@@ -43,6 +35,30 @@
       "plot": "A special military unit fights a powerful, out-of-control supercomputer and hundreds of scientists who have mutated into flesh-eating creatures after a laboratory accident.",
       "actors": "Ryan McCluskey, Oscar Pearce, Indra Ové, Anna Bolt",
       "id": 4
+    },
+    {
+      "id": 5
+    },
+    {
+      "id": 6
+    },
+    {
+      "id": 7
+    },
+    {
+      "id": 8
+    },
+    {
+      "id": 9
+    },
+    {
+      "id": 10
+    },
+    {
+      "id": 11
+    },
+    {
+      "id": 12
     }
   ]
 }
