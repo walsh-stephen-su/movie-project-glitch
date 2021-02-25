@@ -1,9 +1,6 @@
 {
   "movies": [
     {
-      "id": 1
-    },
-    {
       "title": "down",
       "rating": "5",
       "poster": "https://m.media-amazon.com/images/M/MV5BYWMwMzQxZjQtODM1YS00YmFiLTk1YjQtNzNiYWY1MDE4NTdiXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SX300.jpg",
