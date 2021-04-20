@@ -24,15 +24,37 @@ $(document).ready(function() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(userInput)
-        }).then(function (response){
-            return response.json()
-            console.log("The movie you enter was :"+response);
-        }).then(function (results){
+            body: JSON.stringify(userInput)})
+            .then((response) => {return response.json()})
+            .then(function (results){
             console.log(results);
             displayMovies(results)
         })
     })
+
+    $(".edit-movie").click(function(e) {
+        e.preventDefault();
+        console.log(this);
+        console.log(e.target);
+        const id = {id: e.target.parent().attr('id')};
+
+        console.log(e.target.parent())
+        console.log(id);
+        fetch(`https://pollen-impossible-bangle.glitch.me/movies`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(id)
+        })
+            .then((response) => {return response.json()})
+            .then(function(results) {
+                console.log(results);
+                // $(".movieModalTitle:text").val()
+            })
+            .catch(() => {$(".modal-title").html("We're sorry, something went wrong.")})
+
+    });
 
 });
 
@@ -54,24 +76,24 @@ $(document).ready(function() {
 
 // //render all of the movies to html
 function displayMovies(movies){
-    console.log(movies);
     for (let i = 0; i < movies.length; i++) {
         if  (movies[i].title !== undefined && movies[i].rating !== undefined)  {
-            console.log(movies[i].title);
             $(".card-deck").append(`
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">${movies[i].title}</h5>
-                                <p class="card-text">${movies[i].plot}</p>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><em>YEAR:</em> ${movies[i].year}</li>
-                                <li class="list-group-item"><em>GENRE:</em> ${movies[i].genre}</li>
-                                <li class="list-group-item"><em>DIRECTOR:</em> ${movies[i].director}</li>
-                                <li class="list-group-item"><em>ACTORS:</em> ${movies[i].actors}</li>
-                                <li class="list-group-item"><em>RATING:</em> ${movies[i].rating}</li>
-                            </ul>
-                        </div>`)
+                <div class="card" id="${movies[i].id}">
+                    <div class="card-body">
+                        <h5 class="card-title">${movies[i].title}</h5>
+                        <p class="card-text">${movies[i].plot}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><em>YEAR:</em> ${movies[i].year}</li>
+                        <li class="list-group-item"><em>GENRE:</em> ${movies[i].genre}</li>
+                        <li class="list-group-item"><em>DIRECTOR:</em> ${movies[i].director}</li>
+                        <li class="list-group-item"><em>ACTORS:</em> ${movies[i].actors}</li>
+                        <li class="list-group-item"><em>RATING:</em> ${movies[i].rating}</li>
+                    </ul>
+                    <button class="btn btn-primary edit-movie" data-toggle="modal" data-target="#movieModal">Edit</button>
+                    <button class="btn btn-primary delete-movie">Delete</button>
+                </div>`)
         }
 
     }
