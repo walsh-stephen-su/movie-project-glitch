@@ -1,22 +1,21 @@
-
 // Wait for window load
-$(window).load(function() {
+$(window).on("load", function() {
   // Animate loader off screen
   $(".se-pre-con").fadeOut("slow");
 });
 
-$(document).ready(function() {
-  $.ajax("https://elemental-sepia-strawflower.glitch.me/movies")
-    .done(function(data) {
-    
-    // $(".se-pre-con").fadeOut();
-    $(".se-pre-con").css("display", "none");
-      console.log(data);
-    })
-    .fail(function() {
-      $(".card").html("Oops, something went wrong :(");
-    });
-});
+// $(document).ready(function() {
+//   $.ajax("https://elemental-sepia-strawflower.glitch.me/movies")
+//     .done(function(data) {
+//
+//     // $(".se-pre-con").fadeOut();
+//     // $(".se-pre-con").css("display", "none");
+//       console.log(data);
+//     })
+//     .fail(function() {
+//       $(".card").html("Oops, something went wrong :(");
+//     });
+// });
 
 // function updateMovies(movies){
 
