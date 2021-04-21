@@ -30,6 +30,7 @@ $(document).ready(function () {
             .then(function (results) {
                 console.log(results);
                 displayMovies(results)
+                location.reload()
             })
     })
 
@@ -73,9 +74,22 @@ $(document).ready(function () {
                 }).then(() => console.log("Posted the movie edit."))
                 .catch(() => console.log("Something went wrong with the movie edit."))
         })
+
     });
+    $(document).on("click", ".delete-movie", function(e){
+        e.preventDefault();
+        const id = $(this).parent().attr('id');
+        fetch(`https://pollen-impossible-bangle.glitch.me/movies/${id}`, {
+            method: "DELETE"
+        }).then(function(response){
+            console.log(response);
+            location.reload()
+        })
+
+    })
 });
 
+// Delete the movie
 
 // function deleteMovie(id){
 //   fetch(`https://elemental-sepia-strawflower.glitch.me/${id}`,{
