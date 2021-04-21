@@ -32,13 +32,11 @@ $(document).ready(function() {
         })
     })
 
-    $(".edit-movie").click(function(e) {
+    $(document).on("click", ".edit-movie", function(e) {
         e.preventDefault();
         console.log(this);
-        console.log(e.target);
-        const id = {id: e.target.parent().attr('id')};
+        const id = {id: $(this).parent().attr('id')};
 
-        console.log(e.target.parent())
         console.log(id);
         fetch(`https://pollen-impossible-bangle.glitch.me/movies`, {
             method: "POST",
