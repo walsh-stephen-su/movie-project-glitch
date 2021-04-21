@@ -111,7 +111,7 @@ function displayMovies(movies) {
     for (let i = 0; i < movies.length; i++) {
         if (movies[i].title !== undefined && movies[i].rating !== undefined) {
             $(".card-deck").append(`
-                <div class="card m-0 p-0 col-lg-3" id="${movies[i].id}">
+                <div class="card m-0 mb-3 p-0 col-md-6 col-lg-4 col-xl-3" id="${movies[i].id}">
                     <div class="card-body p-0">
                         <h5 class="card-title text-center text-light bg-secondary rounded-top p-2">${movies[i].title}</h5>
                         <p class="card-text m-4">${movies[i].plot}</p>
