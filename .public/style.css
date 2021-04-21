@@ -17,4 +17,7 @@
 em {
 	font-weight: bold;
 }
+.edit-movie{
+	z-index: 10;
+}
 
