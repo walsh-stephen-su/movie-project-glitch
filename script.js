@@ -1,58 +1,60 @@
 // Wait for window load
-$(window).on("load", function() {
-  // Animate loader off screen
-  $(".se-pre-con").fadeOut("slow");
+$(window).on("load", function () {
+    // Animate loader off screen
+    $(".se-pre-con").fadeOut("slow");
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     $.ajax("https://pollen-impossible-bangle.glitch.me/movies")
-        .done(function(movies){
+        .done(function (movies) {
             displayMovies(movies)
         })
-        .fail(function() {
-          $(".card").html("Oops, something went wrong :(");
+        .fail(function () {
+            $(".card").html("Oops, something went wrong :(");
         });
 
-    $('#submit-movie-rating').click(function (e){
+    $('#submit-movie-rating').click(function (e) {
         e.preventDefault();
-       let userInputTitle = $('#Movie-Input-Title').val()
+        let userInputTitle = $('#Movie-Input-Title').val()
         let userInputRating = $('#Movie-Input-Rating').val()
-        let userInput = {title: userInputTitle, rating: userInputRating}
+        let userInput = { title: userInputTitle, rating: userInputRating }
         console.log(userInput);
-        fetch(`https://pollen-impossible-bangle.glitch.me/movies`,{
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userInput)})
-            .then((response) => {return response.json()})
-            .then(function (results){
-            console.log(results);
-            displayMovies(results)
-        })
-    })
-
-    $(document).on("click", ".edit-movie", function(e) {
-        e.preventDefault();
-        console.log(this);
-        const id = {id: $(this).parent().attr('id')};
-
-        console.log(id);
         fetch(`https://pollen-impossible-bangle.glitch.me/movies`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(id)
+            body: JSON.stringify(userInput)
         })
-            .then((response) => {return response.json()})
-            .then(function(results) {
+            .then((response) => { return response.json() })
+            .then(function (results) {
                 console.log(results);
-                // $(".movieModalTitle:text").val()
+                displayMovies(results)
             })
-            .catch(() => {$(".modal-title").html("We're sorry, something went wrong.")})
+    })
 
+    $(document).on("click", ".edit-movie", function (e) {
+        e.preventDefault();
+        console.log(this);
+        const id = $(this).parent().attr('id');
+
+        console.log(id);
+        fetch(`https://pollen-impossible-bangle.glitch.me/movies/${id}`)
+            .then((response) => { return response.json() })
+            .then(function (results) {
+                console.log(results);
+                $(".movieModalTitle:text").val(`${results.title}`);
+                $(".movieModalPlot:text").val(`${results.plot}`);
+                $(".movieModalGenre:text").val(`${results.genre}`);
+                $(".movieModalYear:text").val(`${results.year}`)
+                $(".movieModalDirector:text").val(`${results.director}`);
+                $(".movieModalActors:text").val(`${results.actors}`);
+                $(".movieModalRating:text").val(`${results.rating}`);
+            })
+            .catch(() => { $(".modal-title").html("We're sorry, something went wrong.") })
     });
+
+    $(document).on("click", "")
 
 });
 
@@ -73,9 +75,9 @@ $(document).ready(function() {
 // }
 
 // //render all of the movies to html
-function displayMovies(movies){
+function displayMovies(movies) {
     for (let i = 0; i < movies.length; i++) {
-        if  (movies[i].title !== undefined && movies[i].rating !== undefined)  {
+        if (movies[i].title !== undefined && movies[i].rating !== undefined) {
             $(".card-deck").append(`
                 <div class="card" id="${movies[i].id}">
                     <div class="card-body">
