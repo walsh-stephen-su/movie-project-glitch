@@ -17,9 +17,6 @@
 
 
 /* -------------- card -------------- */
-.card {
-	flex-grow: 0;
-}
 
 h5 {
 	font-size: 1.5rem;
