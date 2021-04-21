@@ -52,10 +52,28 @@ $(document).ready(function () {
                 $(".movieModalRating:text").val(`${results.rating}`);
             })
             .catch(() => { $(".modal-title").html("We're sorry, something went wrong.") })
+        
+            $(document).on("click", "#finish-editing", function(e){
+                e.preventDefault();
+                let movieInfo = {
+                    title: $(".movieModalTitle").val(),
+                    plot: $(".movieModalPlot").val(),
+                    genre: $(".movieModalGenre").val(),
+                    year: $(".movieModalYear").val(),
+                    director: $(".movieModalDirector").val(),
+                    actors: $(".movieModalActors").val(),
+                    rating: $(".movieModalRating").val()
+                }
+                fetch(`https://pollen-impossible-bangle.glitch.me/movies/${id}`, {
+                    method: "PUT",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(movieInfo)
+                }).then(() => console.log("Posted the movie edit."))
+                .catch(() => console.log("Something went wrong with the movie edit."))
+        })
     });
-
-    $(document).on("click", "")
-
 });
 
 
