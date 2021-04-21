@@ -7,45 +7,79 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<form>
-    <div class="mb-3">
-        <label for="Movie-Input-Title" class="form-label">Enter Movies</label>
-        <input type="text" class="form-control" id="Movie-Input-Title" aria-describedby="MovieHelp" placeholder="Enter Movie here">
-        <br>
-        <input type="text" class="form-control" id="Movie-Input-Rating" aria-describedby="MovieHelp" placeholder="Enter Rating here">
-    </div>
-    <button type="submit" class="btn btn-primary" id="submit-movie-rating">Submit</button>
-</form>
-<hr>
+<nav class="navbar navbar-dark bg-dark">
+    <span class="navbar-brand mb-0 h1">Movie PRO</span>
+    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addMovieModal">Add Movie</button>
 
-<div class="se-pre-con"></div>
-<div class="card-deck"></div>
-
-<div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModal" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Movie Info</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" id="x">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <label>TITLE: <input type="text" class="movieModalTitle"></label>
-                <label>PLOT: <input type="text" class="movieModalPlot"></label>
-                <label>YEAR: <input type="text" class ="movieModalYear"></label>
-                <label>GENRE: <input type="text" class="movieModalGenre"></label>
-                <label>DIRECTOR: <input type="text" class="movieModalDirector"></label>
-                <label>ACTORS: <input type="text" class="movieModalActors"></label>
-                <label>RATING: <input type="text" class="movieModalRating"></label>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" id="finish-editing">Finish Editing</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <div class="btn-group" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#">Dropdown link</a>
+                <a class="dropdown-item" href="#">Dropdown link</a>
             </div>
         </div>
     </div>
-</div>
+</nav>
+
+<main class="container">
+    <form class="modal fade input-group" id="addMovieModal" tabindex="-1" aria-labelledby="addMovieModal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Movie Info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" id="x">×</span>
+                    </button>
+                </div>
+                <div class="modal-body d-flex flex-column">
+                    <label for="Movie-Input-Title" class="form-label">Enter Movies</label>
+                    <input type="text" class="form-control" id="Movie-Input-Title" aria-describedby="MovieHelp" placeholder="Enter Movie here">
+                    <label for="Movie-Input-Rating" class="form-label">Enter Rating</label>
+                    <input type="text" class="form-control" id="Movie-Input-Rating" aria-describedby="MovieHelp" placeholder="Enter Rating here">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-secondary" id="submit-movie-rating">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <hr>
+
+    <div class="se-pre-con"></div>
+    <div class="card-deck row"></div>
+
+    <div class="modal fade input-group" id="movieModal" tabindex="-1" aria-labelledby="movieModal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Movie Info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" id="x">×</span>
+                    </button>
+                </div>
+                <div class="modal-body d-flex flex-column">
+                    <label>TITLE: <input type="text" class="form-control movieModalTitle"></label>
+                    <label>PLOT: </label>
+                    <textarea class="form-control movieModalPlot"></textarea>
+                    <label>YEAR: <input type="text" class="form-control movieModalYear"></label>
+                    <label>GENRE: <input type="text" class="form-control movieModalGenre"></label>
+                    <label>DIRECTOR: <input type="text" class="form-control movieModalDirector"></label>
+                    <label>ACTORS: <input type="text" class="form-control movieModalActors"></label>
+                    <label>RATING: <input type="text" class="form-control movieModalRating"></label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="finish-editing">Finish Editing</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
 
   
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>

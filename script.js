@@ -37,7 +37,7 @@ $(document).ready(function () {
     $(document).on("click", ".edit-movie", function (e) {
         e.preventDefault();
         console.log(this);
-        const id = $(this).parent().attr('id');
+        const id = $(this).parent().parent().attr('id');
 
         console.log(id);
         fetch(`https://pollen-impossible-bangle.glitch.me/movies/${id}`)
@@ -45,7 +45,7 @@ $(document).ready(function () {
             .then(function (results) {
                 console.log(results);
                 $(".movieModalTitle:text").val(`${results.title}`);
-                $(".movieModalPlot:text").val(`${results.plot}`);
+                $(".movieModalPlot").val(`${results.plot}`);
                 $(".movieModalGenre:text").val(`${results.genre}`);
                 $(".movieModalYear:text").val(`${results.year}`)
                 $(".movieModalDirector:text").val(`${results.director}`);
@@ -78,7 +78,7 @@ $(document).ready(function () {
     });
     $(document).on("click", ".delete-movie", function(e){
         e.preventDefault();
-        const id = $(this).parent().attr('id');
+        const id = $(this).parent().parent().attr('id');
         fetch(`https://pollen-impossible-bangle.glitch.me/movies/${id}`, {
             method: "DELETE"
         }).then(function(response){
@@ -111,20 +111,22 @@ function displayMovies(movies) {
     for (let i = 0; i < movies.length; i++) {
         if (movies[i].title !== undefined && movies[i].rating !== undefined) {
             $(".card-deck").append(`
-                <div class="card" id="${movies[i].id}">
-                    <div class="card-body">
-                        <h5 class="card-title">${movies[i].title}</h5>
-                        <p class="card-text">${movies[i].plot}</p>
+                <div class="card m-0 p-0 col-lg-3" id="${movies[i].id}">
+                    <div class="card-body p-0">
+                        <h5 class="card-title text-center text-light bg-secondary rounded-top p-2">${movies[i].title}</h5>
+                        <p class="card-text m-4">${movies[i].plot}</p>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><em>YEAR:</em> ${movies[i].year}</li>
-                        <li class="list-group-item"><em>GENRE:</em> ${movies[i].genre}</li>
-                        <li class="list-group-item"><em>DIRECTOR:</em> ${movies[i].director}</li>
-                        <li class="list-group-item"><em>ACTORS:</em> ${movies[i].actors}</li>
-                        <li class="list-group-item"><em>RATING:</em> ${movies[i].rating}</li>
+                    <ul class="list-group list-group-flush border-bottom-0 ml-3 mr-3">
+                        <li class="list-group-item pl-1 pr-1"><em>YEAR:</em> ${movies[i].year}</li>
+                        <li class="list-group-item pl-1 pr-1"><em>GENRE:</em> ${movies[i].genre}</li>
+                        <li class="list-group-item pl-1 pr-1"><em>DIRECTOR:</em> ${movies[i].director}</li>
+                        <li class="list-group-item pl-1 pr-1"><em>ACTORS:</em> ${movies[i].actors}</li>
+                        <li class="list-group-item pl-1 pr-1"><em>RATING:</em> ${movies[i].rating}</li>
                     </ul>
-                    <button class="btn btn-primary edit-movie" data-toggle="modal" data-target="#movieModal">Edit</button>
-                    <button class="btn btn-primary delete-movie">Delete</button>
+                    <div class="d-flex justify-content-center mb-2">
+                        <button class="btn btn-secondary pl-4 pr-4 mr-2 edit-movie" data-toggle="modal" data-target="#movieModal">Edit</button>
+                        <button class="btn btn-secondary delete-movie">Delete</button>
+                    </div>    
                 </div>`)
         }
 
