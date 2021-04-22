@@ -30,6 +30,9 @@ textarea.form-control {
 	height: 7rem;
 }
 
+
+}
+
 @media (min-width: 576px) {
 	.card-deck .card {
 		flex: auto;
