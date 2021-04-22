@@ -121,6 +121,8 @@ $(document).ready(function () {
         })
         .catch(() => console.log("Something went wrong with the movie edit."))
     });
+
+    // sort movies by rating
 });
 
 
