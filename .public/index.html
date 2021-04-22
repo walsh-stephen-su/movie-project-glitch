@@ -19,15 +19,15 @@
                 Sort by
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" href="#">Rating</a>
-                <a class="dropdown-item" href="#">Title</a>
-                <a class="dropdown-item" href="#">Genre</a>
+                <a class="dropdown-item" id="rating" href="#">Rating</a>
+                <a class="dropdown-item" id="title" href="#">Title</a>
+                <a class="dropdown-item" id="genre" href="#">Genre</a>
             </div>
         </div>
     </div>
 </nav>
 
-<main class="container">
+<main class="container mt-4">
     <form class="modal fade input-group" id="addMovieModal" tabindex="-1" aria-labelledby="addMovieModal" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -48,8 +48,6 @@
         </div>
     </form>
 
-    <hr>
-
     <div class="se-pre-con"></div>
     <div class="card-deck row"></div>
 
@@ -63,14 +61,27 @@
                     </button>
                 </div>
                 <div class="modal-body d-flex flex-column">
-                    <label>TITLE: <input type="text" class="form-control movieModalTitle"></label>
-                    <label>PLOT: </label>
-                    <textarea class="form-control movieModalPlot"></textarea>
-                    <label>YEAR: <input type="text" class="form-control movieModalYear"></label>
-                    <label>GENRE: <input type="text" class="form-control movieModalGenre"></label>
-                    <label>DIRECTOR: <input type="text" class="form-control movieModalDirector"></label>
-                    <label>ACTORS: <input type="text" class="form-control movieModalActors"></label>
-                    <label>RATING: <input type="text" class="form-control movieModalRating"></label>
+                    <label><em>TITLE:</em>
+                        <input type="text" class="form-control movieModalTitle">
+                    </label>
+                    <label><em>PLOT:</em>
+                        <textarea class="form-control movieModalPlot"></textarea>
+                    </label>
+                    <label><em>YEAR:</em>
+                        <input type="text" class="form-control movieModalYear">
+                    </label>
+                    <label><em>GENRE:</em>
+                        <input type="text" class="form-control movieModalGenre">
+                    </label>
+                    <label><em>DIRECTOR:</em>
+                        <input type="text" class="form-control movieModalDirector">
+                    </label>
+                    <label><em>ACTORS:</em>
+                        <input type="text" class="form-control movieModalActors">
+                    </label>
+                    <label><em>RATING:</em>
+                        <input type="text" class="form-control movieModalRating">
+                    </label>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" id="finish-editing">Finish Editing</button>
@@ -95,8 +106,8 @@
 </footer>
 
 
-  
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 <script src="../script.js"></script>
 </body>
