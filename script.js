@@ -16,22 +16,34 @@ $(document).ready(function () {
     $('#submit-movie-rating').click(function (e) {
         e.preventDefault();
         let userInputTitle = $('#Movie-Input-Title').val()
-        let userInputRating = $('#Movie-Input-Rating').val()
-        let userInput = { title: userInputTitle, rating: userInputRating }
-        console.log(userInput);
-        fetch(`https://pollen-impossible-bangle.glitch.me/movies`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userInput)
-        })
+        fetch(`http://www.omdbapi.com/?t=${userInputTitle}&apikey=8f3e93c7`)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+            let userInput = { 
+                title: result.Title, 
+                plot: result.Plot,
+                year: result.Released.split(" ")[2],
+                genre: result.Genre,
+                director: result.Director,
+                actors: result.Actors,
+                rating: result.imdbRating
+            }
+            console.log(userInput);
+            fetch(`https://pollen-impossible-bangle.glitch.me/movies`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userInput)
+            })
             .then((response) => { return response.json() })
             .then(function (results) {
                 console.log(results);
                 displayMovies(results)
                 location.reload()
             })
+        })
     })
 
     $(document).on("click", ".edit-movie", function (e) {
