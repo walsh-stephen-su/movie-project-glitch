@@ -4,6 +4,7 @@ $(window).on("load", function () {
     $(".se-pre-con").fadeOut("slow");
 });
 
+// do a GET request to get the movie info form db.json and display it
 $(document).ready(function () {
     $.ajax("https://pollen-impossible-bangle.glitch.me/movies")
         .done(function (movies) {
@@ -13,9 +14,10 @@ $(document).ready(function () {
             $(".card").html("Oops, something went wrong :(");
         });
 
-    $('#submit-movie-rating').click(function (e) {
+    //
+    $('#submit-movie-name').click(function (e) {
         e.preventDefault();
-        let userInputTitle = $('#Movie-Input-Title').val()
+        let userInputTitle = $('#Movie-Input-Title').val();
         fetch(`http://www.omdbapi.com/?t=${userInputTitle}&apikey=8f3e93c7`)
         .then(response => response.json())
         .then(result => {
@@ -43,15 +45,29 @@ $(document).ready(function () {
                 displayMovies(results)
                 location.reload()
             })
-        })
-    })
+        }).catch(() => $("#Movie-Input-Title:text").val(`Sorry, cannot find the movie :(`));
+    });
 
+    // click the plot paragraph the movie poster will show up
+    $(document).on("click", ".plot", function () {
+        let movieTitle = $(this).siblings()[0].innerHTML;
+        console.log(movieTitle);
+        fetch(`http://img.omdbapi.com/?t=${movieTitle}&apikey=8f3e93c7`)
+            .then(response => {
+                console.log(response);
+                console.log(response.url);
+                $(this).html(`<img src=${response.url}>`);
+            });
+    });
+
+    // click edit button a form with movie info will popup
     $(document).on("click", ".edit-movie", function (e) {
         e.preventDefault();
         console.log(this);
         const id = $(this).parent().parent().attr('id');
-
         console.log(id);
+
+        // use the id to get movie info from db.json and then display the info in the inputs for user to edit
         fetch(`https://pollen-impossible-bangle.glitch.me/movies/${id}`)
             .then((response) => { return response.json() })
             .then(function (results) {
@@ -65,9 +81,12 @@ $(document).ready(function () {
                 $(".movieModalRating:text").val(`${results.rating}`);
             })
             .catch(() => { $(".modal-title").html("We're sorry, something went wrong.") })
-        
+
+            // click button to submit the edited info to db.json and then reload the page to display the edited info
             $(document).on("click", "#finish-editing", function(e){
                 e.preventDefault();
+
+                // get info form the inputs
                 let movieInfo = {
                     title: $(".movieModalTitle").val(),
                     plot: $(".movieModalPlot").val(),
@@ -77,56 +96,43 @@ $(document).ready(function () {
                     actors: $(".movieModalActors").val(),
                     rating: $(".movieModalRating").val()
                 }
+
+                // do a PUT request
                 fetch(`https://pollen-impossible-bangle.glitch.me/movies/${id}`, {
                     method: "PUT",
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(movieInfo)
-                }).then(() => console.log("Posted the movie edit."))
+                }).then(() => location.reload())
                 .catch(() => console.log("Something went wrong with the movie edit."))
-        })
-
+        });
     });
+
+    // click delete button and then delete the movie form db.json and then reload the page to see the result
     $(document).on("click", ".delete-movie", function(e){
         e.preventDefault();
         const id = $(this).parent().parent().attr('id');
         fetch(`https://pollen-impossible-bangle.glitch.me/movies/${id}`, {
             method: "DELETE"
-        }).then(function(response){
+        }).then(response => {
             console.log(response);
             location.reload()
         })
-
-    })
+        .catch(() => console.log("Something went wrong with the movie edit."))
+    });
 });
 
-// Delete the movie
 
-// function deleteMovie(id){
-//   fetch(`https://elemental-sepia-strawflower.glitch.me/${id}`,{
-//     method: "DELETE"
-//   })
-// }
-
-// //we will need movie title, description, etc. from the user
-
-
-
-// //need to get the options that the user wants to change for that movie
-// function editMovie(id){
-
-// }
-
-// //render all of the movies to html
+// render all of the movies to html
 function displayMovies(movies) {
     for (let i = 0; i < movies.length; i++) {
-        if (movies[i].title !== undefined && movies[i].rating !== undefined) {
+        if (movies[i].title !== undefined) {
             $(".card-deck").append(`
                 <div class="card m-0 mb-3 p-0 col-md-6 col-lg-4 col-xl-3" id="${movies[i].id}">
                     <div class="card-body p-0">
                         <h5 class="card-title text-center text-light bg-secondary rounded-top p-2">${movies[i].title}</h5>
-                        <p class="card-text m-4">${movies[i].plot}</p>
+                        <p class="card-text m-4 plot">${movies[i].plot}</p>
                     </div>
                     <ul class="list-group list-group-flush border-bottom-0 ml-3 mr-3">
                         <li class="list-group-item pl-1 pr-1"><em>YEAR:</em> ${movies[i].year}</li>
@@ -139,8 +145,10 @@ function displayMovies(movies) {
                         <button class="btn btn-secondary pl-4 pr-4 mr-2 edit-movie" data-toggle="modal" data-target="#movieModal">Edit</button>
                         <button class="btn btn-secondary delete-movie">Delete</button>
                     </div>    
-                </div>`)
+                </div>`);
         }
-
     }
 }
+
+
+
