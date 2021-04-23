@@ -9,22 +9,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <span class="navbar-brand mb-0 h1">Movie PRO</span>
-    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addMovieModal">Add Movie</button>
 
-        <div class="btn-group" role="group">
-            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Sort by
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" id="rating" href="#">Rating</a>
-                <a class="dropdown-item" id="title" href="#">Title</a>
-                <a class="dropdown-item" id="genre" href="#">Genre</a>
-            </div>
-        </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addMovieModal">Add Movie</button>
+            </li>
+            <li class="nav-item dropdown">
+                <button id="btnSortDropdown" type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sort by
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnSortDropdown">
+                    <a class="dropdown-item" id="rating" href="#">Rating</a>
+                    <a class="dropdown-item" id="title" href="#">Title</a>
+                    <a class="dropdown-item" id="genre" href="#">Genre</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <button id="btnSearchDropdown" type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Search by
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnSearchDropdown">
+                    <a class="dropdown-item" href="#">Rating</a>
+                    <a class="dropdown-item" href="#">Title</a>
+                    <a class="dropdown-item" href="#">Genre</a>
+                </div>
+            </li>
+        </ul>
     </div>
+
 </nav>
 
 <main class="container mt-4">

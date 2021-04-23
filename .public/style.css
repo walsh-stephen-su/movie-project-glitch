@@ -15,9 +15,13 @@
 	background: url(../images/loading.gif) center no-repeat #fff;
 }
 
+/* -------------- navbar -------------- */
+div.show {
+	width: 96px;
+}
 
-/* -------------- card -------------- */
 
+/* -------------- movie card -------------- */
 h5 {
 	font-size: 1.5rem;
 }
