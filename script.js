@@ -203,6 +203,53 @@ $(document).ready(function () {
         })
         .catch(() => console.log("Something went wrong with the movie edit."))
     });
+
+    // search movies
+    $(document).on("click", ".movie-search", () => {
+        // Get the selected option & search movie value
+        let selectedTypeSm = $("#movie-search-select-sm option:selected").text(),
+            selectedTypeMd = $("#movie-search-select-md option:selected").text();
+        let movieToSearchSm = $("#search-item-sm").val(),
+            movieToSearchMd = $("#search-item-md").val();
+
+        if (selectedTypeSm === "Type") {
+            $("#search-item-sm").val("Please select a movie type.");
+        }
+
+        let movieToSearch = {};
+
+        if (selectedTypeSm === "Rating") {
+            movieToSearch = {rating: movieToSearchSm};
+        } else if (selectedTypeSm === "Title") {
+            movieToSearch = {title: movieToSearchSm};
+        } else if (selectedTypeSm === "Genre") {
+            movieToSearch = {genre: movieToSearchSm};
+        }
+
+        if (selectedTypeMd === "Type") {
+            $("#search-item-md").val("Please select a movie type.");
+        }
+        if (selectedTypeMd === "Rating") {
+            movieToSearch = {rating: movieToSearchMd};
+        } else if (selectedTypeMd === "Title") {
+            movieToSearch = {title: movieToSearchMd};
+        } else if (selectedTypeMd === "Genre"){
+            movieToSearch = {genre: movieToSearchMd};
+        }
+
+        console.log(movieToSearch);
+
+        fetch(`https://pollen-impossible-bangle.glitch.me/movies`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(movieToSearch)
+        }).done(response => response.json())
+            .done(results => {
+                console.log(results);
+            })
+    });
 });
 
 

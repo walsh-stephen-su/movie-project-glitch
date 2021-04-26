@@ -29,12 +29,17 @@ div.show {
 }
 
 .btn-dark {
+	background-color: #3d90b3;
+	border-color: #3d90b3;
+}
 
+.btn-dark:hover {
+	background-color: rgba(2,123,255,0.68);
 }
 
 /* -------------- movie search -------------- */
 div.d-flex:nth-child(1) > img:nth-child(1) {
-	width: 4rem;
+	width: 3.5rem;
 }
 
 h3 {
@@ -44,23 +49,38 @@ h3 {
 
 select.custom-select {
 	width: 5rem;
-	padding: 0;
+	padding: 0 0 0 .3rem;
 }
 
 .btn-success {
 	background-color: #4abede;
 	border-color: #5bb4cc;
 }
+
 .btn-success:hover {
 	background-color: rgba(2,123,255,0.68);
+}
+
+#search-item-sm {
+	width: 18rem;
+}
+
+#search-item-md {
+	width: 22rem;
 }
 
 .form-control {
 	border-radius: 0;
 	width: auto;
 }
+
 button.btn-outline-secondary {
 	border-radius: 0;
+	border-color: #ced4da;
+}
+
+.fa-search {
+	color: white;
 }
 
 /* -------------- movie card -------------- */
