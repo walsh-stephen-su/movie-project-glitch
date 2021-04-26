@@ -16,10 +16,52 @@
 }
 
 /* -------------- navbar -------------- */
+.navbar-brand {
+	margin-right: 2rem;
+}
+
 div.show {
 	width: 96px;
 }
 
+.bg-dark {
+	background-color: #3d90b3!important;
+}
+
+.btn-dark {
+
+}
+
+/* -------------- movie search -------------- */
+div.d-flex:nth-child(1) > img:nth-child(1) {
+	width: 4rem;
+}
+
+h3 {
+	line-height: 4.8rem;
+	color: #4abede;
+}
+
+select.custom-select {
+	width: 5rem;
+	padding: 0;
+}
+
+.btn-success {
+	background-color: #4abede;
+	border-color: #5bb4cc;
+}
+.btn-success:hover {
+	background-color: rgba(2,123,255,0.68);
+}
+
+.form-control {
+	border-radius: 0;
+	width: auto;
+}
+button.btn-outline-secondary {
+	border-radius: 0;
+}
 
 /* -------------- movie card -------------- */
 h5 {
@@ -34,7 +76,14 @@ textarea.form-control {
 	height: 7rem;
 }
 
+.bg-secondary {
+	background-color: #b39d3d!important;
+}
 
+.btn-secondary {
+	background-color: #b3623d;
+	border-color: #b3623d;
+}
 
 @media (min-width: 576px) {
 	.card-deck .card {
