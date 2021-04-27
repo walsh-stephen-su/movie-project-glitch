@@ -8,7 +8,35 @@ $(document).ready(function () {
     // display movies -- do a GET request to get the movie info form db.json and display it
     $.ajax("https://pollen-impossible-bangle.glitch.me/movies")
         .done(function (movies) {
-            displayMovies(movies)
+            console.log(movies);
+            displayMovies(movies);
+
+            // search movies
+            $(document).on("click", ".movie-search", () => {
+                // Get the selected option & search movie value on small screen
+                let selectedTypeSm = $("#movie-search-select-sm option:selected").text(),
+                    movieToSearchSm = $("#search-item-sm").val();
+
+                if (movieToSearchSm) {
+                    // go through the movies array to filter out the searched movies
+                    searchMovies(movies, selectedTypeSm, movieToSearchSm);
+                    console.log(moviesSearched);
+                }
+
+                // Get the selected option & search movie value on medium screen
+                let selectedTypeMd = $("#movie-search-select-md option:selected").text(),
+                    movieToSearchMd = $("#search-item-md").val();
+
+                if (movieToSearchMd) {
+                    // go through the movies array to filter out the searched movies
+                    searchMovies(movies, selectedTypeMd, movieToSearchMd);
+                    console.log(moviesSearched);
+                }
+
+                // clean the old movie cards and then display the ordered movies
+                $(".card-deck").html("");
+                displayMovies(moviesSearched);
+            });
         })
         .fail(function () {
             $(".card-deck").html("Oops, something went wrong :(");
@@ -203,53 +231,6 @@ $(document).ready(function () {
         })
         .catch(() => console.log("Something went wrong with the movie edit."))
     });
-
-    // search movies
-    $(document).on("click", ".movie-search", () => {
-        // Get the selected option & search movie value
-        let selectedTypeSm = $("#movie-search-select-sm option:selected").text(),
-            selectedTypeMd = $("#movie-search-select-md option:selected").text();
-        let movieToSearchSm = $("#search-item-sm").val(),
-            movieToSearchMd = $("#search-item-md").val();
-
-        if (selectedTypeSm === "Type") {
-            $("#search-item-sm").val("Please select a movie type.");
-        }
-
-        let movieToSearch = {};
-
-        if (selectedTypeSm === "Rating") {
-            movieToSearch = {rating: movieToSearchSm};
-        } else if (selectedTypeSm === "Title") {
-            movieToSearch = {title: movieToSearchSm};
-        } else if (selectedTypeSm === "Genre") {
-            movieToSearch = {genre: movieToSearchSm};
-        }
-
-        if (selectedTypeMd === "Type") {
-            $("#search-item-md").val("Please select a movie type.");
-        }
-        if (selectedTypeMd === "Rating") {
-            movieToSearch = {rating: movieToSearchMd};
-        } else if (selectedTypeMd === "Title") {
-            movieToSearch = {title: movieToSearchMd};
-        } else if (selectedTypeMd === "Genre"){
-            movieToSearch = {genre: movieToSearchMd};
-        }
-
-        console.log(movieToSearch);
-
-        fetch(`https://pollen-impossible-bangle.glitch.me/movies`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(movieToSearch)
-        }).done(response => response.json())
-            .done(results => {
-                console.log(results);
-            })
-    });
 });
 
 
@@ -276,6 +257,42 @@ function displayMovies(movies) {
                     </div>    
                 </div>`);
         }
+    }
+}
+
+// search movies by rating, title, or genre
+let moviesSearched = [];
+function searchMovies(movies, selectedType, movieToSearch) {
+    if (selectedType === "Rating") { // search by rating
+        moviesSearched = movies.filter(movie => movie.rating >= movieToSearch);
+    } else if (selectedType === "Title") { // search by title
+        moviesSearched = movies.filter(movie => {
+            console.log(movie.title);
+            if (movie.title !== undefined && movie.title.toLowerCase().includes(movieToSearch.toLowerCase())) {
+                return movie;
+            }
+        });
+    } else if (selectedType === "Genre") { // search by genre
+        moviesSearched = movies.filter(movie => {
+            if (movie.genre !== undefined) {
+                let movieGenreArr = movie.genre.toLowerCase().split(", "),
+                movieToSearchArr = movieToSearch.toLowerCase().split(", ");
+                function hasAllGenre () {
+                    for (let i = 0; i < movieToSearchArr.length; i++) {
+                        if (!movieGenreArr.includes(movieToSearchArr[i])) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+
+                if (hasAllGenre()) {
+                    return movie;
+                } else {
+                    alert("Sorry, we couldn't find the movie for you :(");
+                }
+            }
+        });
     }
 }
 
