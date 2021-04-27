@@ -274,27 +274,34 @@ function searchMovies(movies, selectedType, movieToSearch) {
         });
     } else if (selectedType === "Genre") { // search by genre
         moviesSearched = movies.filter(movie => {
-            if (movie.genre !== undefined) {
-                let movieGenreArr = movie.genre.toLowerCase().split(", "),
-                movieToSearchArr = movieToSearch.toLowerCase().split(", ");
-                function hasAllGenre () {
-                    for (let i = 0; i < movieToSearchArr.length; i++) {
-                        if (!movieGenreArr.includes(movieToSearchArr[i])) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }
-
-                if (hasAllGenre()) {
-                    return movie;
-                } else {
-                    alert("Sorry, we couldn't find the movie for you :(");
-                }
+            console.log(movie.genre);
+            if (movie.genre !== undefined && movie.genre.toLowerCase().includes(movieToSearch.toLowerCase())) {
+                return movie;
             }
         });
     }
 }
+
+// function advancedSearch () {
+//     if (movie.genre !== undefined) {
+//         let movieGenreArr = movie.genre.toLowerCase().split(", "),
+//             movieToSearchArr = movieToSearch.toLowerCase().split(", ");
+//         function hasAllGenre () {
+//             for (let i = 0; i < movieToSearchArr.length; i++) {
+//                 if (!movieGenreArr.includes(movieToSearchArr[i])) {
+//                     return false;
+//                 }
+//             }
+//             return true;
+//         }
+//
+//         if (hasAllGenre()) {
+//             return movie;
+//         } else {
+//             alert("Sorry, we couldn't find the movie for you :(");
+//         }
+//     }
+// }
 
 
 

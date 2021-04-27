@@ -61,6 +61,12 @@ select.custom-select {
 	background-color: rgba(2,123,255,0.68);
 }
 
+.button {
+	border: 0;
+	background-color: white;
+	text-decoration: underline;
+}
+
 #search-item-sm {
 	width: 18rem;
 }
