@@ -90,6 +90,15 @@ button.btn-outline-secondary {
 }
 
 /* -------------- movie card -------------- */
+.card-deck {
+	margin: 0 auto;
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+}
+
 h5 {
 	font-size: 1.5rem;
 }
@@ -103,7 +112,7 @@ textarea.form-control {
 }
 
 .bg-secondary {
-	background-color: #b39d3d!important;
+	background-color: rgba(0, 0, 0, .2)!important;
 }
 
 .btn-secondary {
@@ -113,6 +122,12 @@ textarea.form-control {
 
 @media (min-width: 576px) {
 	.card-deck .card {
-		flex: auto;
+		flex: 1 0 100%;
+	}
+}
+
+@media (min-width: 768px) {
+	.card-deck .card {
+		max-width: 19rem;
 	}
 }
