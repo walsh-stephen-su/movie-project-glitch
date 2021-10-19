@@ -5,79 +5,61 @@ $(window).on("load", function () {
 });
 
 $(document).ready(function () {
-    // display movies -- do a GET request to get the movie info form db.json and display it
-    $.ajax("https://pollen-impossible-bangle.glitch.me/movies")
-        .done(function (movies) {
-            console.log(movies);
-            displayMovies(movies);
-
-            // search movies
-            $(document).on("click", ".movie-search", () => {
-                // Get the selected option & search movie value on small screen
-                let selectedTypeSm = $("#movie-search-select-sm option:selected").text(),
-                    movieToSearchSm = $("#search-item-sm").val();
-
-                if (movieToSearchSm) {
-                    // go through the movies array to filter out the searched movies
-                    searchMovies(movies, selectedTypeSm, movieToSearchSm);
-                    console.log(moviesSearched);
-                }
-
-                // Get the selected option & search movie value on medium screen
-                let selectedTypeMd = $("#movie-search-select-md option:selected").text(),
-                    movieToSearchMd = $("#search-item-md").val();
-
-                if (movieToSearchMd) {
-                    // go through the movies array to filter out the searched movies
-                    searchMovies(movies, selectedTypeMd, movieToSearchMd);
-                    console.log(moviesSearched);
-                }
-
-                // clean the old movie cards and then display the ordered movies
-                $(".card-deck").html("");
-                displayMovies(moviesSearched);
-            });
-        })
-        .fail(function () {
-            $(".card-deck").html("Oops, something went wrong :(");
-        });
+    //  get all the movies and display them on the page
+    getAllMovies();
 
     // add movie -- click submit button to get info from a movie API and then add the info to db.json then display it
     $('#submit-movie-name').click(function (e) {
         e.preventDefault();
         let userInputTitle = $('#Movie-Input-Title').val();
 
-        // do a GET request to movie API called OMDB
-        fetch(`http://www.omdbapi.com/?t=${userInputTitle}&apikey=8f3e93c7`)
-        .then(response => response.json())
-        .then(result => {
-            console.log(result)
-            let userInput = { 
-                title: result.Title, 
-                plot: result.Plot,
-                year: result.Released.split(" ")[2],
-                genre: result.Genre,
-                director: result.Director,
-                actors: result.Actors,
-                rating: result.imdbRating
-            }
-            console.log(userInput);
+        // format userInputTitle
+        userInputTitle = formatTitle(userInputTitle);
 
-            // do a POST request to db.json and add extra info then reload the page to show
-            fetch(`https://pollen-impossible-bangle.glitch.me/movies`, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userInput)
-            })
-            .then((response) => { return response.json() })
-            .then(function (results) {
-                console.log(results);
-                displayMovies(results)
-                location.reload()
-            })
-        }).catch(() => $("#Movie-Input-Title:text").val(`Sorry, cannot find the movie :(`));
+        // check if userInputTitle(movie title) is already in db
+        fetch(url)
+            .then(response => response.json())
+            .then(movies => {
+                let movieTitles = movies.map(movie => movie.title);
+                console.log(movieTitles);
+                if (!movieTitles.includes(userInputTitle)) {
+                    // do a GET request to movie API called OMDB
+                    fetch(`http://www.omdbapi.com/?t=${userInputTitle}&apikey=8f3e93c7`)
+                        .then(response => response.json())
+                        .then(result => {
+                            let userInput = {
+                                title: result.Title,
+                                rating: result.imdbRating,
+                                poster: result.Poster,
+                                year: result.Released.split(" ")[2],
+                                genre: result.Genre,
+                                director: result.Director,
+                                plot: result.Plot,
+                                actors: result.Actors
+                            }
+                            console.log(userInput);
+
+                            // do a POST request to db.json and add extra info then reload the page to show
+                            fetch(url, {
+                                method: "POST",
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(userInput)
+                            })
+                                .then(response => response.json())
+                                .then(jsonMovieData => {
+                                    console.log(`Added: ${jsonMovieData}`);
+
+                                    // display new movies
+                                    getAllMovies();
+                                })
+                        })
+                        .catch(() => $("#Movie-Input-Title:text").val(`Sorry, cannot find the movie :(`));
+                } else {
+                    alert("This movie already exists, please try another one.");
+                }
+            });
     });
 
     // sort movies by rating
@@ -179,7 +161,9 @@ $(document).ready(function () {
 
         // use the id to get movie info from db.json and then display the info in the inputs for user to edit
         fetch(`https://pollen-impossible-bangle.glitch.me/movies/${id}`)
-            .then((response) => { return response.json() })
+            .then((response) => {
+                return response.json()
+            })
             .then(function (results) {
                 console.log(results);
                 $(".movieModalTitle:text").val(`${results.title}`);
@@ -190,37 +174,39 @@ $(document).ready(function () {
                 $(".movieModalActors:text").val(`${results.actors}`);
                 $(".movieModalRating:text").val(`${results.rating}`);
             })
-            .catch(() => { $(".modal-title").html("We're sorry, something went wrong.") })
+            .catch(() => {
+                $(".modal-title").html("We're sorry, something went wrong.")
+            })
 
-            // click button to submit the edited info to db.json and then reload the page to display the edited info
-            $(document).on("click", "#finish-editing", function(e){
-                e.preventDefault();
+        // click button to submit the edited info to db.json and then reload the page to display the edited info
+        $(document).on("click", "#finish-editing", function (e) {
+            e.preventDefault();
 
-                // get info form the inputs
-                let movieInfo = {
-                    title: $(".movieModalTitle").val(),
-                    plot: $(".movieModalPlot").val(),
-                    genre: $(".movieModalGenre").val(),
-                    year: $(".movieModalYear").val(),
-                    director: $(".movieModalDirector").val(),
-                    actors: $(".movieModalActors").val(),
-                    rating: $(".movieModalRating").val()
-                }
+            // get info form the inputs
+            let movieInfo = {
+                title: $(".movieModalTitle").val(),
+                plot: $(".movieModalPlot").val(),
+                genre: $(".movieModalGenre").val(),
+                year: $(".movieModalYear").val(),
+                director: $(".movieModalDirector").val(),
+                actors: $(".movieModalActors").val(),
+                rating: $(".movieModalRating").val()
+            }
 
-                // do a PUT request
-                fetch(`https://pollen-impossible-bangle.glitch.me/movies/${id}`, {
-                    method: "PUT",
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(movieInfo)
-                }).then(() => location.reload())
+            // do a PUT request
+            fetch(`https://pollen-impossible-bangle.glitch.me/movies/${id}`, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(movieInfo)
+            }).then(() => location.reload())
                 .catch(() => console.log("Something went wrong with the movie edit."))
         });
     });
 
     // delete movie -- click delete button and then delete the movie form db.json and then reload the page to see the result
-    $(document).on("click", ".delete-movie", function(e){
+    $(document).on("click", ".delete-movie", function (e) {
         e.preventDefault();
         const id = $(this).parent().parent().attr('id');
         fetch(`https://pollen-impossible-bangle.glitch.me/movies/${id}`, {
@@ -229,39 +215,87 @@ $(document).ready(function () {
             console.log(response);
             location.reload()
         })
-        .catch(() => console.log("Something went wrong with the movie edit."))
+            .catch(() => console.log("Something went wrong with the movie edit."))
     });
 });
 
 
+// movie API from glitch
+const url = "https://pollen-impossible-bangle.glitch.me/movies";
+
 // render all of the movies to html
 function displayMovies(movies) {
-    for (let i = 0; i < movies.length; i++) {
-        if (movies[i].title !== undefined) {
+    movies.forEach(movie => {
+        if (movie.title !== undefined) {
             $(".card-deck").append(`
-                <div class="card m-0 mb-3 p-0 col-md-6 col-lg-4 col-xl-3" id="${movies[i].id}">
+                <div class="card m-3 p-0" id="${movie.id}">
                     <div class="card-body p-0">
-                        <h5 class="card-title text-center text-light bg-secondary rounded-top p-2">${movies[i].title}</h5>
-                        <p class="card-text m-4 plot">${movies[i].plot}</p>
+                        <img class="rounded-top" src="${movie.poster}" alt="${movie.title}">
                     </div>
-                    <ul class="list-group list-group-flush border-bottom-0 ml-3 mr-3">
-                        <li class="list-group-item pl-1 pr-1"><em>YEAR:</em> ${movies[i].year}</li>
-                        <li class="list-group-item pl-1 pr-1"><em>GENRE:</em> ${movies[i].genre}</li>
-                        <li class="list-group-item pl-1 pr-1"><em>DIRECTOR:</em> ${movies[i].director}</li>
-                        <li class="list-group-item pl-1 pr-1"><em>ACTORS:</em> ${movies[i].actors}</li>
-                        <li class="list-group-item pl-1 pr-1"><em>RATING:</em> ${movies[i].rating}</li>
-                    </ul>
-                    <div class="d-flex justify-content-center mb-2">
-                        <button class="btn btn-secondary pl-4 pr-4 mr-2 edit-movie" data-toggle="modal" data-target="#movieModal">Edit</button>
-                        <button class="btn btn-secondary delete-movie">Delete</button>
-                    </div>    
+                    <div>
+                        <h5 class="card-title text-center text-light bg-secondary">${movie.title}(${movie.year})</h5>
+                        <p class="card-text"><em>Directed by</em> ${movie.director}</p>
+                        <p class="card-text">${movie.rating}/10</p>
+                        <ul class="list-group list-group-flush border-bottom-0 ml-3 mr-3">
+                            <li class="list-group-item pl-1 pr-1"><em>GENRE:</em> ${movie.genre}</li>
+                            <li class="list-group-item pl-1 pr-1"><em>ACTORS:</em> ${movie.actors}</li>
+                        </ul>
+                        <p class="card-text m-4 plot">${movie.plot}</p>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button class="btn btn-secondary pl-4 pr-4 mr-2 edit-movie" data-toggle="modal" data-target="#movieModal">Edit</button>
+                            <button class="btn btn-secondary delete-movie">Delete</button>
+                        </div>    
+                    </div>
+                    
                 </div>`);
         }
-    }
+    });
+}
+
+// get all movies
+function getAllMovies() {
+    // display movies -- do a GET request to get the movie info form db.json and display it
+    fetch(url)
+        .then(response => response.json())
+        .then(movies => {
+            console.log(movies);
+            displayMovies(movies);
+
+            // search movies
+            $(document).on("click", ".movie-search", () => {
+                // Get the selected option & search movie value on small screen
+                let selectedTypeSm = $("#movie-search-select-sm option:selected").text(),
+                    movieToSearchSm = $("#search-item-sm").val();
+
+                if (movieToSearchSm) {
+                    // go through the movies array to filter out the searched movies
+                    searchMovies(movies, selectedTypeSm, movieToSearchSm);
+                    console.log(moviesSearched);
+                }
+
+                // Get the selected option & search movie value on medium screen
+                let selectedTypeMd = $("#movie-search-select-md option:selected").text(),
+                    movieToSearchMd = $("#search-item-md").val();
+
+                if (movieToSearchMd) {
+                    // go through the movies array to filter out the searched movies
+                    searchMovies(movies, selectedTypeMd, movieToSearchMd);
+                    console.log(moviesSearched);
+                }
+
+                // clean the old movie cards and then display the ordered movies
+                $(".card-deck").html("");
+                displayMovies(moviesSearched);
+            });
+        })
+        .catch(function () {
+            $(".card-deck").html("Oops, something went wrong :(");
+        });
 }
 
 // search movies by rating, title, or genre
 let moviesSearched = [];
+
 function searchMovies(movies, selectedType, movieToSearch) {
     if (selectedType === "Rating") { // search by rating
         moviesSearched = movies.filter(movie => movie.rating >= movieToSearch);
@@ -280,6 +314,14 @@ function searchMovies(movies, selectedType, movieToSearch) {
             }
         });
     }
+}
+
+function formatTitle(string) {
+    const titleArr = string.split(' ');
+
+    const formattedArr = titleArr.map(title => title.charAt(0).toUpperCase() + title.slice(1).toLowerCase());
+
+    return formattedArr.join(' ');
 }
 
 // function advancedSearch () {
